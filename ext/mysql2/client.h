@@ -53,4 +53,6 @@ typedef struct {
 void init_mysql2_client();
 void decr_mysql2_client(mysql_client_wrapper *wrapper);
 
+void rb_mysql_set_server_query_flags(MYSQL *client, VALUE result);
+
 #endif

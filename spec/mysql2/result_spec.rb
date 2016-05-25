@@ -516,4 +516,19 @@ describe Mysql2::Result do
       end
     end
   end
+  context "server flags" do
+    before(:each) do
+      @test_result = @client.query("SELECT * FROM mysql2_test ORDER BY id DESC LIMIT 1")
+    end
+
+    it "should set a definitive value for query_was_slow" do
+      @test_result.server_flags[:query_was_slow].should eql(false)
+    end
+    it "should set a definitive value for no_index_used" do
+      @test_result.server_flags[:no_index_used].should eql(true)
+    end
+    it "should set a definitive value for no_good_index_used" do
+      @test_result.server_flags[:no_good_index_used].should eql(false)
+    end
+  end
 end
