@@ -462,15 +462,6 @@ describe Mysql2::Client do
         }.should raise_error(Mysql2::Error)
       end
 
-      it 'should be impervious to connection-corrupting timeouts in #query' do
-        pending('`Thread.handle_interrupt` is not defined') unless Thread.respond_to?(:handle_interrupt)
-        # attempt to break the connection
-        expect { Timeout.timeout(0.1) { @client.query('SELECT SLEEP(1)') } }.to raise_error(Timeout::Error)
-
-        # expect the connection to not be broken
-        expect { @client.query('SELECT 1') }.to_not raise_error
-      end
-
       context 'when a non-standard exception class is raised' do
         it "should close the connection when an exception is raised" do
           expect { Timeout.timeout(0.1, ArgumentError) { @client.query('SELECT SLEEP(1)') } }.to raise_error(ArgumentError)
